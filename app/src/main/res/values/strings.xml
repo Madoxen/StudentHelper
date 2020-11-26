@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">StudentHelper</string>
+    <string name="delete_student_button">Delete</string>
+    <string name="welcome">Welcome!</string>
+</resources>
