@@ -11,13 +11,13 @@ import androidx.room.Query
 interface StudentDAO {
 
     @Insert
-    fun insert(student: Student)
+    suspend fun insert(student: Student)
 
     @Delete
-    fun delete(student: Student)
+    suspend fun delete(student: Student)
 
     @Query("select * from student_table")
-    fun all(): List<Student>;
+     fun all(): LiveData<List<Student>>;
 
 
 }

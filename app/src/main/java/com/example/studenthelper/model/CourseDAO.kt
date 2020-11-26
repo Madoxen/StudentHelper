@@ -11,13 +11,13 @@ interface CourseDAO {
 
 
     @Insert
-    fun insert(course: Course)
+    suspend fun insert(course: Course)
 
     @Delete
-    fun delete(course: Course)
+    suspend fun delete(course: Course)
 
     @Query("select * from course_table")
-    fun all(): LiveData<List<Student>> //use async requests
+     fun all(): LiveData<List<Course>> //use async requests
 
 
 }

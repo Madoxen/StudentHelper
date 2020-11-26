@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_teacherListFragment_to_teacherViewFragment"
             app:destination="@id/teacherViewFragment" />
+        <action
+            android:id="@+id/action_teacherListFragment_to_addTeacherFragment"
+            app:destination="@id/addTeacherFragment" />
     </fragment>
     <fragment
         android:id="@+id/teacherViewFragment"
@@ -20,10 +23,32 @@
         <action
             android:id="@+id/action_teacherViewFragment_to_courseViewFragment"
             app:destination="@id/courseViewFragment" />
+        <action
+            android:id="@+id/action_teacherViewFragment_to_addCourseFragment"
+            app:destination="@id/addCourseFragment" />
     </fragment>
     <fragment
         android:id="@+id/courseViewFragment"
         android:name="com.example.studenthelper.CourseViewFragment"
         android:label="course_view_fragment"
-        tools:layout="@layout/course_view_fragment" />
+        tools:layout="@layout/course_view_fragment" >
+        <action
+            android:id="@+id/action_courseViewFragment_to_addStudentFragment"
+            app:destination="@id/addStudentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCourseFragment"
+        android:name="com.example.studenthelper.AddCourseFragment"
+        android:label="fragment_add_course"
+        tools:layout="@layout/fragment_add_course" />
+    <fragment
+        android:id="@+id/addStudentFragment"
+        android:name="com.example.studenthelper.AddStudentFragment"
+        android:label="fragment_add_student"
+        tools:layout="@layout/fragment_add_student" />
+    <fragment
+        android:id="@+id/addTeacherFragment"
+        android:name="com.example.studenthelper.AddTeacherFragment"
+        android:label="fragment_add_teacher"
+        tools:layout="@layout/fragment_add_teacher" />
 </navigation>

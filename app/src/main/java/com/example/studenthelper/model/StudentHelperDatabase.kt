@@ -5,21 +5,20 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.studenthelper.model.*
-import java.security.AccessControlContext
 
-@Database(entities = [Student::class, Course::class], version = 1, exportSchema = false)
-abstract class MyDatabase : RoomDatabase() {
+@Database(entities = [Student::class, Course::class, Teacher::class], version = 1, exportSchema = false)
+abstract class StudentHelperDatabase : RoomDatabase() {
 
     abstract fun studentDao(): StudentDAO
     abstract fun courseDao(): CourseDAO
-    abstract fun courseWithStudentsDao(): CourseWithStudentsDAO;
+    abstract fun teacherDao(): TeacherDAO
 
     //INFO: Singleton?
     companion object{
         @Volatile
-        private var INSTANCE: MyDatabase?=null
+        private var INSTANCE: StudentHelperDatabase?=null
 
-        fun getDatabase(context: Context):MyDatabase{
+        fun getDatabase(context: Context):StudentHelperDatabase{
             val tempInstance=INSTANCE
 
             if(tempInstance!=null)
@@ -29,7 +28,7 @@ abstract class MyDatabase : RoomDatabase() {
                 {
                     val instance= Room.databaseBuilder(
                         context.applicationContext,
-                        MyDatabase::class.java,
+                        StudentHelperDatabase::class.java,
                         "my_database"
                     ).build()
                     INSTANCE=instance
