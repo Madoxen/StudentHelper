@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/teacherListFragment">
+
+    <fragment
+        android:id="@+id/teacherListFragment"
+        android:name="com.example.studenthelper.TeacherListFragment"
+        android:label="TeacherListFragment" >
+        <action
+            android:id="@+id/action_teacherListFragment_to_teacherViewFragment"
+            app:destination="@id/teacherViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacherViewFragment"
+        android:name="com.example.studenthelper.TeacherViewFragment"
+        android:label="TeacherViewFragment" >
+        <action
+            android:id="@+id/action_teacherViewFragment_to_courseViewFragment"
+            app:destination="@id/courseViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/courseViewFragment"
+        android:name="com.example.studenthelper.CourseViewFragment"
+        android:label="course_view_fragment"
+        tools:layout="@layout/course_view_fragment" />
+</navigation>
