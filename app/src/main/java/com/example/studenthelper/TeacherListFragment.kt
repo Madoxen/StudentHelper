@@ -42,7 +42,7 @@ class TeacherListFragment : Fragment() {
 
 
         viewManager = LinearLayoutManager(this.context)
-        viewAdapter  = TeacherListAdapter(viewModel.teachers) {/*TODO: deletion callback*/};
+        viewAdapter  = TeacherListAdapter(viewModel.teachers) { teacher ->  viewModel.removeTeacher(teacher)};
 
 
         recyclerView.apply {
