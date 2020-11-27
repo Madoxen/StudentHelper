@@ -1,4 +1,4 @@
-package com.example.studenthelper.view
+package com.example.studenthelper.view.Adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +21,9 @@ class StudentListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.student_entry, parent, false)
-        return StudentViewHolder(view)
+        return StudentViewHolder(
+            view
+        )
     }
 
     override fun getItemCount(): Int {

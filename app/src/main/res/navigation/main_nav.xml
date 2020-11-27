@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/teacherListFragment"
-        android:name="com.example.studenthelper.TeacherListFragment"
+        android:name="com.example.studenthelper.view.TeacherListFragment"
         android:label="TeacherListFragment" >
         <action
             android:id="@+id/action_teacherListFragment_to_teacherViewFragment"
@@ -15,40 +15,99 @@
         <action
             android:id="@+id/action_teacherListFragment_to_addTeacherFragment"
             app:destination="@id/addTeacherFragment" />
+        <action
+            android:id="@+id/action_teacherListFragment_to_courseListFragment"
+            app:destination="@id/courseListFragment" />
+        <action
+            android:id="@+id/action_teacherListFragment_to_studentListFragment"
+            app:destination="@id/studentListFragment" />
     </fragment>
     <fragment
         android:id="@+id/teacherViewFragment"
-        android:name="com.example.studenthelper.TeacherViewFragment"
+        android:name="com.example.studenthelper.view.TeacherViewFragment"
         android:label="TeacherViewFragment" >
         <action
             android:id="@+id/action_teacherViewFragment_to_courseViewFragment"
             app:destination="@id/courseViewFragment" />
         <action
-            android:id="@+id/action_teacherViewFragment_to_addCourseFragment"
-            app:destination="@id/addCourseFragment" />
+            android:id="@+id/action_teacherViewFragment_to_addExistingCourseFragment"
+            app:destination="@id/addExistingCourseFragment" />
     </fragment>
     <fragment
         android:id="@+id/courseViewFragment"
-        android:name="com.example.studenthelper.CourseViewFragment"
+        android:name="com.example.studenthelper.view.CourseViewFragment"
         android:label="course_view_fragment"
         tools:layout="@layout/course_view_fragment" >
         <action
-            android:id="@+id/action_courseViewFragment_to_addStudentFragment"
-            app:destination="@id/addStudentFragment" />
+            android:id="@+id/action_courseViewFragment_to_addExistingStudentFragment"
+            app:destination="@id/addExistingStudentFragment" />
     </fragment>
     <fragment
         android:id="@+id/addCourseFragment"
-        android:name="com.example.studenthelper.AddCourseFragment"
+        android:name="com.example.studenthelper.view.AddCourseFragment"
         android:label="fragment_add_course"
-        tools:layout="@layout/fragment_add_course" />
+        tools:layout="@layout/fragment_add_course" >
+        <action
+            android:id="@+id/action_addCourseFragment_pop"
+            app:popUpTo="@id/addCourseFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/addStudentFragment"
-        android:name="com.example.studenthelper.AddStudentFragment"
+        android:name="com.example.studenthelper.view.AddStudentFragment"
         android:label="fragment_add_student"
-        tools:layout="@layout/fragment_add_student" />
+        tools:layout="@layout/fragment_add_student" >
+        <action
+            android:id="@+id/action_addStudentFragment_pop"
+            app:popUpTo="@id/addStudentFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/addTeacherFragment"
-        android:name="com.example.studenthelper.AddTeacherFragment"
+        android:name="com.example.studenthelper.view.AddTeacherFragment"
         android:label="fragment_add_teacher"
-        tools:layout="@layout/fragment_add_teacher" />
+        tools:layout="@layout/fragment_add_teacher" >
+        <action
+            android:id="@+id/action_addTeacherFragment_pop"
+            app:popUpTo="@id/addTeacherFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/courseListFragment"
+        android:name="com.example.studenthelper.view.CourseListFragment"
+        android:label="course_list_fragment"
+        tools:layout="@layout/course_list_fragment" >
+        <action
+            android:id="@+id/action_courseListFragment_to_addCourseFragment"
+            app:destination="@id/addCourseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentListFragment"
+        android:name="com.example.studenthelper.view.StudentListFragment"
+        android:label="student_list_fragment"
+        tools:layout="@layout/student_list_fragment" >
+        <action
+            android:id="@+id/action_studentListFragment_to_addStudentFragment"
+            app:destination="@id/addStudentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addExistingCourseFragment"
+        android:name="com.example.studenthelper.AddExistingCourseFragment"
+        android:label="fragment_add_existing_course"
+        tools:layout="@layout/fragment_add_existing_course" >
+        <action
+            android:id="@+id/action_addExistingCourseFragment_pop"
+            app:popUpTo="@id/addExistingCourseFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/addExistingStudentFragment"
+        android:name="com.example.studenthelper.AddExistingStudentFragment"
+        android:label="fragment_add_existing_student"
+        tools:layout="@layout/fragment_add_existing_student" >
+        <action
+            android:id="@+id/action_addExistingStudentFragment_pop"
+            app:popUpTo="@id/addExistingStudentFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

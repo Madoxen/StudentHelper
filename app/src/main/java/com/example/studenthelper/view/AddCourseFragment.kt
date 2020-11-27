@@ -1,7 +1,6 @@
-package com.example.studenthelper
+package com.example.studenthelper.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,19 +9,17 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.studenthelper.R
+import com.example.studenthelper.VM.CourseViewModel
 import com.example.studenthelper.VM.TeacherListViewModel
+import com.example.studenthelper.VM.TeacherViewModel
+import com.example.studenthelper.model.Course
 import com.example.studenthelper.model.Teacher
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+
+class AddCourseFragment : Fragment() {
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AddTeacherFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class AddTeacherFragment : Fragment() {
-    lateinit var viewModel: TeacherListViewModel;
-
+    lateinit var viewModel: TeacherViewModel;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +36,7 @@ class AddTeacherFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         viewModel =
-            ViewModelProvider(requireActivity()).get(TeacherListViewModel::class.java) //This view model is bound to activity
+            ViewModelProvider(requireActivity()).get(TeacherViewModel::class.java) //This view model is bound to activity
         return inflater.inflate(R.layout.fragment_add_teacher, container, false)
     }
 
@@ -51,13 +48,11 @@ class AddTeacherFragment : Fragment() {
 
 
         b.setOnClickListener {
-            viewModel.addNewTeacher(
-                Teacher(
-                    0,
-                    firstNameEditText.text.toString(),
-                    lastNameEditText.text.toString()
-                )
+            viewModel.addNewCourseToTeacher(
+                Course(0,"") //TODO: change this to add existing courses
             )
+            view.clearFocus();
+            view.findNavController().navigate(R.id.action_addTeacherFragment_pop)
         }
     }
 

@@ -4,5 +4,5 @@ import androidx.room.Entity
 
 
 @Entity(primaryKeys = ["teacherID", "courseID"])
-class TeacherCourseCrossRef(val teacherID: Long, val courseID: Long )
+data class TeacherCourseCrossRef(val teacherID: Long, val courseID: Long )
 

@@ -1,12 +1,17 @@
 package com.example.studenthelper.VM
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
+import com.example.sqlite_example.model.StudentHelperDatabase
+import com.example.studenthelper.model.Course
 import com.example.studenthelper.model.Student
+import com.example.studenthelper.model.Teacher
+import com.example.studenthelper.model.repos.CourseRepo
+import com.example.studenthelper.model.repos.TeacherRepo
+import kotlinx.coroutines.launch
 
-class CourseViewModel : ViewModel() {
-    val students : LiveData<List<Student>> = MutableLiveData<List<Student>>();
+class CourseViewModel(application: Application) : AndroidViewModel(application) {
+
 
 
 }

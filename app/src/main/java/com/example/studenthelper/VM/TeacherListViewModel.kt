@@ -14,6 +14,7 @@ class TeacherListViewModel(application: Application) : AndroidViewModel(applicat
 
     private val repo : TeacherRepo ;
     val teachers: LiveData<List<Teacher>>;
+    var chosenTeacher : Teacher? = null;
 
     init
     {

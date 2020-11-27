@@ -1,48 +1,49 @@
-package com.example.studenthelper
+package com.example.studenthelper.view
 
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.studenthelper.R
+import com.example.studenthelper.VM.CourseListViewModel
 import com.example.studenthelper.VM.TeacherListViewModel
-import com.example.studenthelper.view.TeacherListAdapter
+import com.example.studenthelper.view.Adapter.CourseListAdapter
+import com.example.studenthelper.view.Adapter.TeacherListAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class TeacherListFragment : Fragment() {
-
-    private lateinit var viewModel: TeacherListViewModel
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private lateinit var viewManager: RecyclerView.LayoutManager
+class CourseListFragment : Fragment() {
 
     companion object {
-        fun newInstance() = TeacherListFragment()
+        fun newInstance() = CourseListFragment()
     }
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewAdapter: CourseListAdapter
+    private lateinit var viewManager: LinearLayoutManager
+
+    private lateinit var viewModel: CourseListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val v = inflater.inflate(R.layout.teacher_list_fragment, container, false)
-        recyclerView = v.findViewById<RecyclerView>(R.id.teachers_recyclerView)
-        return v;
+        return inflater.inflate(R.layout.course_list_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        viewModel =
-            ViewModelProvider(requireActivity()).get(TeacherListViewModel::class.java) //This view model is bound to activity
-
+        viewModel = ViewModelProvider(this).get(CourseListViewModel::class.java)
 
         viewManager = LinearLayoutManager(this.context)
-        viewAdapter  = TeacherListAdapter(viewModel.teachers) { teacher ->  viewModel.removeTeacher(teacher)};
+        viewAdapter = CourseListAdapter(
+            viewModel.courses)
+
 
 
         recyclerView.apply {
@@ -55,12 +56,9 @@ class TeacherListFragment : Fragment() {
             adapter = viewAdapter
         }
 
-        viewModel.teachers.observe(viewLifecycleOwner) {
-                viewAdapter.notifyDataSetChanged();
+        viewModel.courses.observe(viewLifecycleOwner) {
+            viewAdapter.notifyDataSetChanged();
         }
-
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,7 +66,7 @@ class TeacherListFragment : Fragment() {
         view.findViewById<FloatingActionButton>(R.id.addTeacher_floatingActionButton)
             .setOnClickListener { view ->
                 view.findNavController()
-                    .navigate(R.id.action_teacherListFragment_to_addTeacherFragment)
+                    .navigate(R.id.action_courseListFragment_to_addCourseFragment)
             }
     }
 

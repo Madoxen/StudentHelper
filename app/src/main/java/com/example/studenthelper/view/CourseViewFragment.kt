@@ -1,4 +1,4 @@
-package com.example.studenthelper
+package com.example.studenthelper.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import com.example.studenthelper.R
 import com.example.studenthelper.VM.CourseViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -34,7 +35,7 @@ class CourseViewFragment : Fragment() {
         view.findViewById<FloatingActionButton>(R.id.addStudent_floatingActionButton)
             .setOnClickListener { view ->
                 view.findNavController()
-                    .navigate(R.id.action_courseViewFragment_to_addStudentFragment)
+                    .navigate(R.id.action_courseViewFragment_to_addExistingStudentFragment)
             }
     }
 

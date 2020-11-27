@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">StudentHelper</string>
     <string name="delete_student_button">Delete</string>
-    <string name="welcome">Welcome!</string>
+    <string name="welcome">Welcome! Choose teacher</string>
     <string name="course_name">Course Name</string>
     <string name="teachers">Teachers</string>
     <!-- TODO: Remove or change this placeholder text -->
