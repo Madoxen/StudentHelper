@@ -43,7 +43,6 @@ class TeacherListAdapter(
         val textViewLastName = holder.itemView.findViewById<TextView>(R.id.lastNameTextView)
         val deleteStudentButton = holder.itemView.findViewById<Button>(R.id.deleteStudentButton);
 
-
         textViewFirstName.text = data.value?.get(position)?.firstName
         textViewLastName.text = data.value?.get(position)?.lastName
         //assign callback

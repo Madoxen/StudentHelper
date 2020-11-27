@@ -45,7 +45,6 @@ class TeacherListFragment : Fragment() {
         viewModel =
             ViewModelProvider(requireActivity()).get(TeacherListViewModel::class.java) //This view model is bound to activity
 
-
         viewManager = LinearLayoutManager(this.context)
         viewAdapter = TeacherListAdapter(
             viewModel.teachers,
@@ -53,7 +52,6 @@ class TeacherListFragment : Fragment() {
             { teacher ->
                 viewModel.chosenTeacher = teacher;
             });
-
 
         recyclerView.apply {
             // use this setting to improve performance if you know that changes
@@ -68,8 +66,6 @@ class TeacherListFragment : Fragment() {
         viewModel.teachers.observe(viewLifecycleOwner) {
             viewAdapter.notifyDataSetChanged();
         }
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,8 +75,6 @@ class TeacherListFragment : Fragment() {
                 view.findNavController()
                     .navigate(R.id.action_teacherListFragment_to_addTeacherFragment)
             }
-
-
     }
 
 }

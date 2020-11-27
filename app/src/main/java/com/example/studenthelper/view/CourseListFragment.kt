@@ -26,14 +26,15 @@ class CourseListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: CourseListAdapter
     private lateinit var viewManager: LinearLayoutManager
-
     private lateinit var viewModel: CourseListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.course_list_fragment, container, false)
+        val v = inflater.inflate(R.layout.course_list_fragment, container, false)
+        recyclerView = v.findViewById<RecyclerView>(R.id.allCourses_RecyclerView)
+        return v;
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -42,7 +43,9 @@ class CourseListFragment : Fragment() {
 
         viewManager = LinearLayoutManager(this.context)
         viewAdapter = CourseListAdapter(
-            viewModel.courses)
+            viewModel.courses
+        )
+
 
 
 
@@ -63,11 +66,6 @@ class CourseListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<FloatingActionButton>(R.id.addTeacher_floatingActionButton)
-            .setOnClickListener { view ->
-                view.findNavController()
-                    .navigate(R.id.action_courseListFragment_to_addCourseFragment)
-            }
     }
 
 }

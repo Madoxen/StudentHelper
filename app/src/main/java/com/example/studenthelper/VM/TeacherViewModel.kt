@@ -12,21 +12,23 @@ import kotlinx.coroutines.launch
 
 class TeacherViewModel(application: Application, teacher: Teacher) : AndroidViewModel(application) {
 
-    private val repo : TeacherWithCourseRepo =
+    private val repo: TeacherWithCourseRepo =
         TeacherWithCourseRepo(StudentHelperDatabase.getDatabase(application).teacherCourseDao());
 
-    var teacherCourses: LiveData<List<TeacherWithCourses>> = MutableLiveData<List<TeacherWithCourses>>();
+    var teacherCourses: LiveData<List<TeacherWithCourses>> =
+        MutableLiveData<List<TeacherWithCourses>>();
 
-    var representedTeacher : Teacher = teacher
-    get() { return representedTeacher; }
-    set(value) {
-        field = value;
-        teacherCourses = repo.getForTeacher(field.teacherID)}
-
+    var representedTeacher: Teacher = teacher
+        get() {
+            return representedTeacher; }
+        set(value) {
+            field = value;
+            teacherCourses = repo.getForTeacher(field.teacherID)
+        }
 
     fun addNewCourseToTeacher(course: Course) {
         viewModelScope.launch { //launch new coroutine to avoid blocking main thread
-            repo.add(TeacherCourseCrossRef(representedTeacher.teacherID,course.courseID))
+            repo.add(TeacherCourseCrossRef(representedTeacher.teacherID, course.courseID))
         }
     }
 
