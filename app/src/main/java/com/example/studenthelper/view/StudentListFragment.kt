@@ -17,6 +17,7 @@ import com.example.studenthelper.R
 import com.example.studenthelper.VM.StudentListViewModel
 import com.example.studenthelper.view.Adapter.CourseListAdapter
 import com.example.studenthelper.view.Adapter.StudentListAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class StudentListFragment : Fragment() {
 
@@ -28,16 +29,12 @@ class StudentListFragment : Fragment() {
     private lateinit var viewAdapter: StudentListAdapter
     private val viewModel: StudentListViewModel by viewModels()
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.student_list_fragment, container, false)
     }
-
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,6 +60,10 @@ class StudentListFragment : Fragment() {
 
         viewModel.students.observe(viewLifecycleOwner) {
             viewAdapter.notifyDataSetChanged();
+        }
+
+        view.findViewById<FloatingActionButton>(R.id.addStudent_floatingActionButton).setOnClickListener {
+            view.findNavController().navigate(R.id.action_studentListFragment_to_addStudentFragment)
         }
     }
 

@@ -52,7 +52,7 @@ class AddStudentFragment : Fragment() {
 
             //return to previous fragment
             view.clearFocus();
-            view.findNavController().navigate(R.id.action_addCourseFragment_pop);
+            view.findNavController().navigate(R.id.action_addStudentFragment_pop);
         }
     }
 

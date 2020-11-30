@@ -40,5 +40,8 @@ class CourseListAdapter(
 
     override fun onBindViewHolder(holder: CourseViewHolder, position: Int) {
         holder.name.text = data.value?.get(position)?.name ?: "Error fetching data";
+        holder.itemView.setOnClickListener {
+            data.value?.get(position)?.let { course -> chooseCallback(course) };
+        }
     }
 }

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.studenthelper.R
 import com.example.studenthelper.VM.CourseListViewModel
 import com.example.studenthelper.view.Adapter.CourseListAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CourseListFragment : Fragment() {
 
@@ -50,7 +51,7 @@ class CourseListFragment : Fragment() {
                 //select handler
                 val bundle = bundleOf("course" to it)
                 view.findNavController()
-                    .navigate(R.id.action_courseListFragment2_to_courseViewFragment, bundle)
+                    .navigate(R.id.action_courseListFragment_to_courseViewFragment, bundle)
             }
         )
 
@@ -66,6 +67,11 @@ class CourseListFragment : Fragment() {
 
         viewModel.courses.observe(viewLifecycleOwner) {
             viewAdapter.notifyDataSetChanged();
+        }
+
+
+        view.findViewById<FloatingActionButton>(R.id.addCourse_floatingActionButton).setOnClickListener {
+            view.findNavController().navigate(R.id.action_courseListFragment_to_addCourseFragment)
         }
     }
 

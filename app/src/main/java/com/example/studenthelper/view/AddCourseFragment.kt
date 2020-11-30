@@ -37,14 +37,13 @@ class AddCourseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val b: Button = view.findViewById<Button>(R.id.confirm_button)
-        val courseEditText = view.findViewById<EditText>(R.id.courseEntryName_textView)
-
+        val b: Button = view.findViewById<Button>(R.id.addCourseConfirm_button)
+        val courseEditText = view.findViewById<EditText>(R.id.courseName_editText)
 
 
         b.setOnClickListener {
             viewModel.addNewCourse(
-                Course(0,courseEditText.toString())
+                Course(0,courseEditText.text.toString())
             )
             view.clearFocus();
             view.findNavController().navigate(R.id.action_addCourseFragment_pop)

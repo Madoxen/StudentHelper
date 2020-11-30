@@ -15,7 +15,4 @@ class CourseViewModel(application: Application, representedCourse : Course) : An
     val students : LiveData<CourseWithStudents> = repo.getStudentsForCourse(representedCourse);
 
 
-
-
-
 }

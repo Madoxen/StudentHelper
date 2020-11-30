@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/courseListFragment2">
+    app:startDestination="@id/courseListFragment">
 
     <fragment
         android:id="@+id/courseViewFragment"
@@ -54,15 +54,15 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/courseListFragment2"
+        android:id="@+id/courseListFragment"
         android:name="com.example.studenthelper.view.CourseListFragment"
         android:label="course_list_fragment"
         tools:layout="@layout/course_list_fragment" >
         <action
-            android:id="@+id/action_courseListFragment2_to_addCourseFragment"
+            android:id="@+id/action_courseListFragment_to_addCourseFragment"
             app:destination="@id/addCourseFragment" />
         <action
-            android:id="@+id/action_courseListFragment2_to_courseViewFragment"
+            android:id="@+id/action_courseListFragment_to_courseViewFragment"
             app:destination="@id/courseViewFragment" />
     </fragment>
 </navigation>
