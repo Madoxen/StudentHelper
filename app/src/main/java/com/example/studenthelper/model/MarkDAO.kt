@@ -1,22 +1,19 @@
 package com.example.studenthelper.model
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 
-@Dao
-interface CourseDAO {
-
+interface MarkDAO {
 
     @Insert
-    suspend fun insert(course: Course)
+    suspend fun insert(mark: Mark)
 
     @Delete
-    suspend fun delete(course: Course)
+    suspend fun delete(mark: Mark)
 
     @Query("select * from course_table")
-     fun all(): LiveData<List<Course>> //use async requests
+    fun all(): LiveData<List<Mark>> //use async requests
 
 }

@@ -8,13 +8,13 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.studenthelper.model.*
 
-@Database(entities = [Student::class, Course::class, Teacher::class, TeacherCourseCrossRef::class], version = 2, exportSchema = false)
+@Database(entities = [Student::class, Course::class, StudentCourseCrossRef::class], version = 2, exportSchema = false)
 abstract class StudentHelperDatabase : RoomDatabase() {
 
     abstract fun studentDao(): StudentDAO
     abstract fun courseDao(): CourseDAO
-    abstract fun teacherDao(): TeacherDAO
-    abstract fun teacherCourseDao() : TeacherCourseDao
+    abstract fun courseStudentDao() : CourseWithStudentsDAO;
+
 
     //INFO: Singleton?
     companion object{

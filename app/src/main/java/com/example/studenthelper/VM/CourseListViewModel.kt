@@ -15,19 +15,20 @@ class CourseListViewModel(application: Application) : AndroidViewModel(applicati
     private val repo: CourseRepo;
     val courses: LiveData<List<Course>>;
 
+
     init {
         repo = CourseRepo(StudentHelperDatabase.getDatabase(application).courseDao());
         courses = repo.readAll;
     }
 
 
-    fun addNewTeacher(course: Course) {
+    fun addNewCourse(course: Course) {
         viewModelScope.launch { //launch new coroutine to avoid blocking main thread
             repo.add(course)
         }
     }
 
-    fun removeTeacher(course: Course) {
+    fun removeCourse(course: Course) {
         viewModelScope.launch { //launch new coroutine to avoid blocking main thread
             repo.delete(course)
         }

@@ -10,16 +10,12 @@ import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.studenthelper.R
-import com.example.studenthelper.VM.CourseViewModel
-import com.example.studenthelper.VM.TeacherListViewModel
-import com.example.studenthelper.VM.TeacherViewModel
+import com.example.studenthelper.VM.CourseListViewModel
 import com.example.studenthelper.model.Course
-import com.example.studenthelper.model.Teacher
 
 class AddCourseFragment : Fragment() {
 
-
-    lateinit var viewModel: TeacherViewModel;
+    lateinit var viewModel: CourseListViewModel;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +23,6 @@ class AddCourseFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -36,28 +31,28 @@ class AddCourseFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         viewModel =
-            ViewModelProvider(requireActivity()).get(TeacherViewModel::class.java) //This view model is bound to activity
-        return inflater.inflate(R.layout.fragment_add_teacher, container, false)
+            ViewModelProvider(requireActivity()).get(CourseListViewModel::class.java) //This view model is bound to activity
+        return inflater.inflate(R.layout.fragment_add_course, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val b: Button = view.findViewById<Button>(R.id.confirm_button)
-        val firstNameEditText = view.findViewById<EditText>(R.id.teacherFirstName_editText)
-        val lastNameEditText = view.findViewById<EditText>(R.id.teacherLastName_editText)
+        val courseEditText = view.findViewById<EditText>(R.id.courseEntryName_textView)
+
 
 
         b.setOnClickListener {
-            viewModel.addNewCourseToTeacher(
-                Course(0,"") //TODO: change this to add existing courses
+            viewModel.addNewCourse(
+                Course(0,courseEditText.toString())
             )
             view.clearFocus();
-            view.findNavController().navigate(R.id.action_addTeacherFragment_pop)
+            view.findNavController().navigate(R.id.action_addCourseFragment_pop)
         }
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = AddTeacherFragment();
+        fun newInstance() = AddCourseFragment();
     }
 }

@@ -8,6 +8,7 @@ import com.example.studenthelper.model.StudentDAO
 class StudentRepo(private val studentDao: StudentDAO) {
     val readAll: LiveData<List<Student>> = studentDao.all()
 
+
     suspend fun add(student:Student) {
         studentDao.insert(student)
     }

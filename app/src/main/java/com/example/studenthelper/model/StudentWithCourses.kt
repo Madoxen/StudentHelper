@@ -4,26 +4,25 @@ import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
 
-data class TeacherWithCourses(
+data class StudentWithCourses(
     @Embedded
-    val teacher: Teacher,
+    val student: Student,
     @Relation(
-        parentColumn = "teacherID",
+        parentColumn = "studentID",
         entityColumn = "courseID",
-        associateBy = Junction(TeacherCourseCrossRef::class)
+        associateBy = Junction(StudentCourseCrossRef::class)
     )
     val courses: List<Course>
 )
 
 
-data class CourseWithTeachers(
+data class CourseWithStudents(
     @Embedded
     val course: Course,
     @Relation(
         parentColumn = "courseID",
         entityColumn = "teacherID",
-        associateBy = Junction(TeacherCourseCrossRef::class)
+        associateBy = Junction(StudentCourseCrossRef::class)
     )
-    val teachers: List<Teacher>
-)
+    val students: List<Student>)
 

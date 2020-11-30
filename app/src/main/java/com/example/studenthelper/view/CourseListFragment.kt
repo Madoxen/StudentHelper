@@ -6,16 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.observe
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studenthelper.R
 import com.example.studenthelper.VM.CourseListViewModel
-import com.example.studenthelper.VM.TeacherListViewModel
 import com.example.studenthelper.view.Adapter.CourseListAdapter
-import com.example.studenthelper.view.Adapter.TeacherListAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CourseListFragment : Fragment() {
 
@@ -39,15 +37,28 @@ class CourseListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CourseListViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(CourseListViewModel::class.java)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
 
         viewManager = LinearLayoutManager(this.context)
         viewAdapter = CourseListAdapter(
-            viewModel.courses
+            viewModel.courses,
+            {
+                //delete handler
+                viewModel.removeCourse(it);
+            },
+
+            {
+                //select handler
+                val bundle = bundleOf("course" to it)
+                view.findNavController()
+                    .navigate(R.id.action_courseListFragment2_to_courseViewFragment, bundle)
+            }
         )
-
-
-
 
         recyclerView.apply {
             // use this setting to improve performance if you know that changes
@@ -62,10 +73,6 @@ class CourseListFragment : Fragment() {
         viewModel.courses.observe(viewLifecycleOwner) {
             viewAdapter.notifyDataSetChanged();
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
 }

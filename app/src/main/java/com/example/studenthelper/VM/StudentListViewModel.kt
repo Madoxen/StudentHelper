@@ -11,22 +11,22 @@ import com.example.studenthelper.model.repos.StudentRepo
 import kotlinx.coroutines.launch
 
 class StudentListViewModel(application: Application) : AndroidViewModel(application) {
-    private val repo: StudentRepo;
+    private val repo: StudentRepo =
+        StudentRepo(StudentHelperDatabase.getDatabase(application).studentDao());
     val students: LiveData<List<Student>>;
 
     init {
-        repo = StudentRepo(StudentHelperDatabase.getDatabase(application).studentDao());
         students = repo.readAll;
     }
 
 
-    fun addNewTeacher(student: Student) {
+    fun addNewStudent(student: Student) {
         viewModelScope.launch { //launch new coroutine to avoid blocking main thread
             repo.add(student)
         }
     }
 
-    fun removeTeacher(student: Student) {
+    fun removeStudent(student: Student) {
         viewModelScope.launch { //launch new coroutine to avoid blocking main thread
             repo.delete(student)
         }

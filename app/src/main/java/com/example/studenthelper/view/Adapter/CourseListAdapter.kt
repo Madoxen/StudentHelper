@@ -9,7 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.studenthelper.R
 import com.example.studenthelper.model.Course
 
-class CourseListAdapter(private val data: LiveData<List<Course>>) :
+class CourseListAdapter(
+    private val data: LiveData<List<Course>>,
+    private val chooseCallback: (Course) -> Unit,
+    private val deleteCallback: (Course) -> Unit
+) :
     RecyclerView.Adapter<CourseListAdapter.CourseViewHolder>() {
 
     class CourseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -23,7 +27,7 @@ class CourseListAdapter(private val data: LiveData<List<Course>>) :
                 R.layout.course_entry,
                 parent,
                 false
-            ) //TODO: change student entry to new teacher entry for better control
+            )
 
         return CourseViewHolder(
             view
