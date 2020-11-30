@@ -29,8 +29,7 @@ class StudentListAdapter(
             @JvmStatic
             var toggleVis: Int = View.GONE
                 get() = field;
-                set(value)
-                {
+                set(value) {
                     field = value
                     onToggleVisibilityChanged();
                 }
@@ -38,33 +37,31 @@ class StudentListAdapter(
             @JvmStatic
             fun onToggleVisibilityChanged() {
                 //trigger change in all registered holders
-                for (t in toggles)
-                {
-                    t.visibility = toggleVis;
+                for (t in toggles) {
+                    t.second();
                 }
             }
 
-            @JvmStatic
-            fun registerHolder(view: View) {
-                toggles.add(view);
-            }
 
             @JvmStatic
-            private val toggles : MutableList<View> = ArrayList<View>()
+            var toggles: MutableList<Pair<View, () -> Unit>> = ArrayList<Pair<View, () -> Unit>>();
+
+
+            @JvmStatic
+            fun registerHolder(view: View, onVisibilityChangedHandler: () -> Unit) {
+                toggles.add(Pair(view, onVisibilityChangedHandler));
+            }
         }
 
         init {
-            registerHolder(selectionToggle);
-
+            registerHolder(view) {
+                selectionToggle.visibility = toggleVis;
+            };
             toggleVis = View.GONE;
             view.setOnLongClickListener() {
-                Log.d("HOLDER","LONG CLICK REGISTERED")
-                if(toggleVis != View.VISIBLE)
-                {
+                if (toggleVis != View.VISIBLE) {
                     toggleVis = View.VISIBLE;
-                }
-                else
-                {
+                } else {
                     toggleVis = View.GONE;
                 }
                 false;
@@ -88,12 +85,6 @@ class StudentListAdapter(
     override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
         holder.textViewFirstName.text = students.value?.get(position)?.firstName
         holder.textViewLastName.text = students.value?.get(position)?.lastName
-        //assign callback
-        /*holder.deleteStudentButton.setOnClickListener() {
-            students.value?.get(position)
-                ?.let { chosenStudent -> deleteStudentCallback(chosenStudent) };
-        }*/
-
     }
 
 }
