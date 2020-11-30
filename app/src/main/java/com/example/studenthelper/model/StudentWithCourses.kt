@@ -10,7 +10,7 @@ data class StudentWithCourses(
     @Relation(
         parentColumn = "studentID",
         entityColumn = "courseID",
-        associateBy = Junction(StudentCourseCrossRef::class)
+        associateBy = Junction(CourseStudentCrossRef::class)
     )
     val courses: List<Course>
 )
@@ -21,8 +21,8 @@ data class CourseWithStudents(
     val course: Course,
     @Relation(
         parentColumn = "courseID",
-        entityColumn = "teacherID",
-        associateBy = Junction(StudentCourseCrossRef::class)
+        entityColumn = "studentID",
+        associateBy = Junction(CourseStudentCrossRef::class)
     )
     val students: List<Student>)
 

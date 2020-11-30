@@ -30,20 +30,14 @@ class CourseListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val v = inflater.inflate(R.layout.course_list_fragment, container, false)
-        recyclerView = v.findViewById<RecyclerView>(R.id.allCourses_RecyclerView)
-        return v;
+        return inflater.inflate(R.layout.course_list_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(CourseListViewModel::class.java)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
+        viewModel = ViewModelProvider(requireActivity()).get(CourseListViewModel::class.java)
+        recyclerView = view.findViewById<RecyclerView>(R.id.allCourses_RecyclerView)
         viewManager = LinearLayoutManager(this.context)
         viewAdapter = CourseListAdapter(
             viewModel.courses,
