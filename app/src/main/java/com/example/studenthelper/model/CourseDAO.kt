@@ -20,7 +20,7 @@ interface CourseDAO {
     fun all(): LiveData<List<Course>> //use async requests
 
 
-    @Query("select * from course_table where courseID = :courseID ")
-    fun first(courseID: Long): LiveData<Course> //use async requests
+    @Query("select * from course_table where courseID = :courseID LIMIT 1")
+    fun getByID(courseID: Long): LiveData<Course> //use async requests
 
 }

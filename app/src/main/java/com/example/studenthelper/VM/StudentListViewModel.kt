@@ -12,12 +12,7 @@ import kotlinx.coroutines.launch
 class StudentListViewModel(application: Application) : AndroidViewModel(application) {
     private val repo: StudentRepo =
         StudentRepo(StudentHelperDatabase.getDatabase(application).studentDao())
-    val students: LiveData<List<Student>>
-
-    init {
-        students = repo.readAll
-    }
-
+    val students: LiveData<List<Student>> = repo.readAll
 
     fun addNewStudent(student: Student) {
         viewModelScope.launch { //launch new coroutine to avoid blocking main thread

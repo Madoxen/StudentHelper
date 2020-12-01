@@ -35,11 +35,10 @@ class CourseListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val v = inflater.inflate(R.layout.course_list_fragment, container, false)
-        recyclerView = v.findViewById<RecyclerView>(R.id.allCourses_RecyclerView)
-        fab = v.findViewById<FloatingActionButton>(R.id.addCourse_floatingActionButton)
+        recyclerView = v.findViewById(R.id.allCourses_RecyclerView)
+        fab = v.findViewById(R.id.addCourse_floatingActionButton)
         return v
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,7 +53,7 @@ class CourseListFragment : Fragment() {
 
             {
                 //select handler
-                val bundle = bundleOf("course" to it.courseID)
+                val bundle = bundleOf("courseID" to it.courseID)
                 navController
                     .navigate(R.id.action_courseListFragment_to_courseViewFragment, bundle)
             }

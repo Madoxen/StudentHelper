@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/addExistingStudentFragment"
-        android:name="com.example.studenthelper.AddExistingStudentFragment"
+        android:name="com.example.studenthelper.view.AddExistingStudentFragment"
         android:label="fragment_add_existing_student"
         tools:layout="@layout/fragment_add_existing_student">
         <action

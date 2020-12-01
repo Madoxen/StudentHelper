@@ -8,7 +8,7 @@ class CourseRepo(private val courseDao: CourseDAO) {
 
     val readAll: LiveData<List<Course>> = courseDao.all()
 
-    fun read(courseID: Long): LiveData<Course> = courseDao.first(courseID)
+    fun read(courseID: Long): LiveData<Course> = courseDao.getByID(courseID)
 
     suspend fun add(course: Course) {
         courseDao.insert(course)
