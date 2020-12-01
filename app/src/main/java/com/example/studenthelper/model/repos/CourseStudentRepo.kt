@@ -9,6 +9,10 @@ public class CourseStudentRepo(private val courseStudentDao: CourseWithStudentsD
         return courseStudentDao.getCourseWithStudents(course.courseID);
     }
 
+    fun getStudentsForCourse(courseID: Long): LiveData<CourseWithStudents> {
+        return courseStudentDao.getCourseWithStudents(courseID);
+    }
+
     suspend fun add(relation: CourseStudentCrossRef) {
         courseStudentDao.insert(relation)
     }

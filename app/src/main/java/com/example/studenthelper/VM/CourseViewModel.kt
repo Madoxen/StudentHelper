@@ -5,14 +5,15 @@ import androidx.lifecycle.*
 import com.example.sqlite_example.model.StudentHelperDatabase
 import com.example.studenthelper.model.Course
 import com.example.studenthelper.model.CourseWithStudents
-import com.example.studenthelper.model.Student
+import com.example.studenthelper.model.repos.CourseRepo
 import com.example.studenthelper.model.repos.CourseStudentRepo
-import com.example.studenthelper.model.repos.StudentRepo
 
-class CourseViewModel(application: Application, representedCourse : Course) : AndroidViewModel(application) {
+class CourseViewModel(application: Application, representedCourseID: Long) :
+    AndroidViewModel(application) {
 
-    private val repo : CourseStudentRepo = CourseStudentRepo(StudentHelperDatabase.getDatabase(application).courseStudentDao());
-    val students : LiveData<CourseWithStudents> = repo.getStudentsForCourse(representedCourse);
-
-
+    private val repo: CourseStudentRepo =
+        CourseStudentRepo(StudentHelperDatabase.getDatabase(application).courseStudentDao());
+    val students: LiveData<CourseWithStudents> = repo.getStudentsForCourse(representedCourseID);
+    val representedCourse: LiveData<Course> =
+        CourseRepo(StudentHelperDatabase.getDatabase(application).courseDao()).read(representedCourseID);
 }

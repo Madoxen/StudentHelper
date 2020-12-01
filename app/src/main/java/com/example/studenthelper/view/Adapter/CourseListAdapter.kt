@@ -11,8 +11,8 @@ import com.example.studenthelper.model.Course
 
 class CourseListAdapter(
     private val data: LiveData<List<Course>>,
-    private val chooseCallback: (Course) -> Unit,
-    private val deleteCallback: (Course) -> Unit
+    private val deleteCallback: (Course) -> Unit,
+    private val chooseCallback: (Course) -> Unit
 ) :
     RecyclerView.Adapter<CourseListAdapter.CourseViewHolder>() {
 

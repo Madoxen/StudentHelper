@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.studenthelper.R
@@ -15,7 +16,7 @@ import com.example.studenthelper.model.Course
 
 class AddCourseFragment : Fragment() {
 
-    lateinit var viewModel: CourseListViewModel;
+    val viewModel: CourseListViewModel by activityViewModels();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +30,6 @@ class AddCourseFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        viewModel =
-            ViewModelProvider(requireActivity()).get(CourseListViewModel::class.java) //This view model is bound to activity
         return inflater.inflate(R.layout.fragment_add_course, container, false)
     }
 

@@ -7,11 +7,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.studenthelper.VM.CourseViewModel
 import com.example.studenthelper.model.Course
 
-class CourseViewModelFactory(val application: Application, val representedCourse: Course) :
+class CourseViewModelFactory(val application: Application, val representedCourseID: Long) :
     ViewModelProvider.AndroidViewModelFactory(
         application
     ) {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return CourseViewModel(application, representedCourse) as T;
+        return CourseViewModel(application, representedCourseID) as T;
     }
 }

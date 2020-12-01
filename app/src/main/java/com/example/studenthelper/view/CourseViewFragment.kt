@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.studenthelper.R
@@ -22,8 +23,8 @@ class CourseViewFragment : Fragment() {
         fun newInstance() = CourseViewFragment()
     }
 
-    private val viewModel: CourseViewModel by viewModels {
-        CourseViewModelFactory(requireActivity().application, arguments?.get("course") as Course)
+    private val viewModel: CourseViewModel by activityViewModels {
+        CourseViewModelFactory(requireActivity().application, arguments?.get("courseID") as Long)
     }
 
     override fun onCreateView(

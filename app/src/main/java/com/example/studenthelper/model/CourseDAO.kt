@@ -19,4 +19,8 @@ interface CourseDAO {
     @Query("select * from course_table")
      fun all(): LiveData<List<Course>> //use async requests
 
+
+    @Query("select * from course_table where courseID = :courseID ")
+    fun first(courseID: Long): LiveData<Course> //use async requests
+
 }
