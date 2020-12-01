@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.studenthelper.R
 import com.example.studenthelper.model.Course
 
+
 class CourseListAdapter(
     private val data: LiveData<List<Course>>,
     private val deleteCallback: (Course) -> Unit,
