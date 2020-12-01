@@ -30,7 +30,8 @@ class StudentListFragment : Fragment() {
     private val viewModel: StudentListViewModel by activityViewModels()
 
 
-    private var actionMode: ActionMode? = null;
+    private var actionMode: ActionMode? = null
+
 
     private val actionModeCallback = object : ActionMode.Callback {
         // Called when the action mode is created; startActionMode() was called
@@ -51,8 +52,9 @@ class StudentListFragment : Fragment() {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             return when (item.itemId) {
                 R.id.menu_deleteItems -> {
-                    tracker.selection.mapNotNull { x -> viewAdapter.students.value?.get(x.toInt())}.forEach { viewModel.removeStudent(it) }
-                    tracker?.clearSelection();
+                    tracker.selection.mapNotNull { x -> viewAdapter.students.value?.get(x.toInt()) }
+                        .forEach { viewModel.removeStudent(it) }
+                    tracker.clearSelection()
                     mode.finish() // Action picked, so close the CAB
                     true
                 }
@@ -63,16 +65,10 @@ class StudentListFragment : Fragment() {
         // Called when the user exits the action mode
         override fun onDestroyActionMode(mode: ActionMode) {
             actionMode = null
-            tracker?.clearSelection();
+            tracker.clearSelection()
         }
     }
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -118,13 +114,6 @@ class StudentListFragment : Fragment() {
 
 
         tracker.addObserver(object : SelectionTracker.SelectionObserver<Any?>() {
-            override fun onItemStateChanged(key: Any, selected: Boolean) {
-                super.onItemStateChanged(key, selected)
-            }
-
-            override fun onSelectionRefresh() {
-                super.onSelectionRefresh()
-            }
 
             override fun onSelectionChanged() {
                 super.onSelectionChanged()
@@ -138,9 +127,6 @@ class StudentListFragment : Fragment() {
                 }
             }
 
-            override fun onSelectionRestored() {
-                super.onSelectionRestored()
-            }
         })
 
         viewAdapter.tracker = tracker
@@ -150,7 +136,7 @@ class StudentListFragment : Fragment() {
         }
 
         if (savedInstanceState != null)
-            tracker?.onRestoreInstanceState(savedInstanceState)
+            tracker.onRestoreInstanceState(savedInstanceState)
 
         fab
             .setOnClickListener {
@@ -162,8 +148,7 @@ class StudentListFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        if (outState != null)
-            tracker?.onSaveInstanceState(outState)
+        tracker.onSaveInstanceState(outState)
     }
 
 

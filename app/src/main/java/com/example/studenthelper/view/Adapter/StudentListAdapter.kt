@@ -1,9 +1,8 @@
 package com.example.studenthelper.view.Adapter
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.lifecycle.LiveData
@@ -23,7 +22,7 @@ class StudentListAdapter(
         setHasStableIds(true)
     }
 
-    var tracker : SelectionTracker<Long>? = null;
+    var tracker: SelectionTracker<Long>? = null
 
     class StudentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textViewFirstName = view.findViewById<TextView>(R.id.firstNameTextView)
@@ -58,16 +57,13 @@ class StudentListAdapter(
     override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
         holder.textViewFirstName.text = students.value?.get(position)?.firstName
         holder.textViewLastName.text = students.value?.get(position)?.lastName
-        if(tracker!!.isSelected(position.toLong())) {
-            holder.textViewFirstName.background = ColorDrawable(
-                Color.parseColor("#80deea")
-            )
-        } else {
-            // Reset color to white if not selected
-            holder.textViewFirstName.background = ColorDrawable(Color.WHITE)
-        }
 
+        if (tracker!!.isSelected(position.toLong()))
+            holder.selectionToggle.visibility = View.VISIBLE
+        else
+            holder.selectionToggle.visibility = View.GONE
 
+        holder.selectionToggle.isChecked = tracker!!.isSelected(position.toLong())
     }
 }
 
