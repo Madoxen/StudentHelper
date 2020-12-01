@@ -1,5 +1,6 @@
 package com.example.studenthelper.view
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -44,11 +45,9 @@ class StudentListFragment : Fragment() {
         navController = view.findNavController()
 
         viewAdapter = StudentListAdapter(
-            viewModel.students
-        )
+            viewModel.students, activity as Activity)
         {
-            //delete handler
-            viewModel.removeStudent(it)
+            it.forEach { s -> viewModel.removeStudent(s) }
         }
 
         recyclerView.apply {
