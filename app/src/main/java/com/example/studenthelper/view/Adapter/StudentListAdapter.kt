@@ -1,5 +1,7 @@
 package com.example.studenthelper.view.Adapter
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.*
 import android.widget.CheckBox
@@ -34,9 +36,7 @@ class StudentListAdapter(
                 override fun getSelectionKey(): Long? = itemId
                 override fun getPosition(): Int = adapterPosition
             }
-
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -58,6 +58,15 @@ class StudentListAdapter(
     override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
         holder.textViewFirstName.text = students.value?.get(position)?.firstName
         holder.textViewLastName.text = students.value?.get(position)?.lastName
+        if(tracker!!.isSelected(position.toLong())) {
+            holder.textViewFirstName.background = ColorDrawable(
+                Color.parseColor("#80deea")
+            )
+        } else {
+            // Reset color to white if not selected
+            holder.textViewFirstName.background = ColorDrawable(Color.WHITE)
+        }
+
 
     }
 }

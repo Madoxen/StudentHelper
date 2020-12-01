@@ -51,7 +51,7 @@ class StudentListFragment : Fragment() {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             return when (item.itemId) {
                 R.id.menu_deleteItems -> {
-                    //TODO: delete items
+                    tracker.selection.mapNotNull { x -> viewAdapter.students.value?.get(x.toInt())}.forEach { viewModel.removeStudent(it) }
                     tracker?.clearSelection();
                     mode.finish() // Action picked, so close the CAB
                     true
@@ -65,7 +65,6 @@ class StudentListFragment : Fragment() {
             actionMode = null
             tracker?.clearSelection();
         }
-
     }
 
 
@@ -137,11 +136,6 @@ class StudentListFragment : Fragment() {
                 } else { //when we still have some selection
                     /* setMenuItemTitle(selectionTracker.getSelection().size())*/
                 }
-                /*  val itemIterable: Iterator<Item> =
-                      selectionTracker.getSelection().iterator()
-                  while (itemIterable.hasNext()) {
-                      Log.i(TAG, itemIterable.next().getItemName())
-                  }*/
             }
 
             override fun onSelectionRestored() {
