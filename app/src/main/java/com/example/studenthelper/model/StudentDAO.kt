@@ -17,7 +17,7 @@ interface StudentDAO {
     suspend fun delete(student: Student)
 
     @Query("select * from student_table")
-     fun all(): LiveData<List<Student>>;
+    fun all(): LiveData<List<Student>>
 
 
 }

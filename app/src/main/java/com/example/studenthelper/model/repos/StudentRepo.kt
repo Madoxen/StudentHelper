@@ -9,10 +9,10 @@ class StudentRepo(private val studentDao: StudentDAO) {
     val readAll: LiveData<List<Student>> = studentDao.all()
 
 
-    suspend fun add(student:Student) {
+    suspend fun add(student: Student) {
         studentDao.insert(student)
     }
 
-    suspend fun delete(student:Student)=studentDao.delete(student)
+    suspend fun delete(student: Student) = studentDao.delete(student)
 
 }

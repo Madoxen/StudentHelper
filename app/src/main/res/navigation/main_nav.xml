@@ -9,7 +9,7 @@
         android:id="@+id/courseViewFragment"
         android:name="com.example.studenthelper.view.CourseViewFragment"
         android:label="course_view_fragment"
-        tools:layout="@layout/course_view_fragment" >
+        tools:layout="@layout/course_view_fragment">
         <action
             android:id="@+id/action_courseViewFragment_to_addExistingStudentFragment"
             app:destination="@id/addExistingStudentFragment" />
@@ -18,7 +18,7 @@
         android:id="@+id/addStudentFragment"
         android:name="com.example.studenthelper.view.AddStudentFragment"
         android:label="fragment_add_student"
-        tools:layout="@layout/fragment_add_student" >
+        tools:layout="@layout/fragment_add_student">
         <action
             android:id="@+id/action_addStudentFragment_pop"
             app:popUpTo="@id/addStudentFragment"
@@ -28,7 +28,7 @@
         android:id="@+id/studentListFragment"
         android:name="com.example.studenthelper.view.StudentListFragment"
         android:label="student_list_fragment"
-        tools:layout="@layout/student_list_fragment" >
+        tools:layout="@layout/student_list_fragment">
         <action
             android:id="@+id/action_studentListFragment_to_addStudentFragment"
             app:destination="@id/addStudentFragment" />
@@ -37,7 +37,7 @@
         android:id="@+id/addExistingStudentFragment"
         android:name="com.example.studenthelper.AddExistingStudentFragment"
         android:label="fragment_add_existing_student"
-        tools:layout="@layout/fragment_add_existing_student" >
+        tools:layout="@layout/fragment_add_existing_student">
         <action
             android:id="@+id/action_addExistingStudentFragment_pop"
             app:popUpTo="@id/addExistingStudentFragment"
@@ -47,7 +47,7 @@
         android:id="@+id/addCourseFragment"
         android:name="com.example.studenthelper.view.AddCourseFragment"
         android:label="fragment_add_course"
-        tools:layout="@layout/fragment_add_course" >
+        tools:layout="@layout/fragment_add_course">
         <action
             android:id="@+id/action_addCourseFragment_pop"
             app:popUpTo="@id/addCourseFragment"
@@ -57,7 +57,7 @@
         android:id="@+id/courseListFragment"
         android:name="com.example.studenthelper.view.CourseListFragment"
         android:label="course_list_fragment"
-        tools:layout="@layout/course_list_fragment" >
+        tools:layout="@layout/course_list_fragment">
         <action
             android:id="@+id/action_courseListFragment_to_addCourseFragment"
             app:destination="@id/addCourseFragment" />

@@ -1,46 +1,41 @@
 package com.example.studenthelper.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.example.studenthelper.R
-import com.example.studenthelper.VM.CourseListViewModel
 import com.example.studenthelper.VM.StudentListViewModel
-import com.example.studenthelper.model.Course
 import com.example.studenthelper.model.Student
 
 class AddStudentFragment : Fragment() {
 
-    private val viewModel: StudentListViewModel by activityViewModels();
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
+    private val viewModel: StudentListViewModel by activityViewModels()
+    private lateinit var studentFirstNameEditText: EditText
+    private lateinit var studentLastNameEditText: EditText
+    private lateinit var confirmButton: Button
+    private lateinit var navController: NavController
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_student, container, false)
+        val v = inflater.inflate(R.layout.fragment_add_student, container, false)
+        studentFirstNameEditText = v.findViewById<EditText>(R.id.studentFirstName_EditText)
+        studentLastNameEditText = v.findViewById<EditText>(R.id.studentLastName_EditText)
+        confirmButton = v.findViewById<Button>(R.id.addStudentConfirm_button)
+        return v
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val studentFirstNameEditText = view.findViewById<EditText>(R.id.studentFirstName_EditText);
-        val studentLastNameEditText = view.findViewById<EditText>(R.id.studentLastName_EditText);
-        val confirmButton = view.findViewById<Button>(R.id.addStudentConfirm_button);
-
+        navController = view.findNavController()
         confirmButton.setOnClickListener {
             viewModel.addNewStudent(
                 Student(
@@ -48,11 +43,10 @@ class AddStudentFragment : Fragment() {
                     studentFirstNameEditText.text.toString(),
                     studentLastNameEditText.text.toString()
                 )
-            );
-
+            )
             //return to previous fragment
-            view.clearFocus();
-            view.findNavController().navigate(R.id.action_addStudentFragment_pop);
+            view.clearFocus()
+            navController.navigate(R.id.action_addStudentFragment_pop)
         }
     }
 

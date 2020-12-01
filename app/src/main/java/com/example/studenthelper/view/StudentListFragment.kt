@@ -1,22 +1,18 @@
 package com.example.studenthelper.view
 
-import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studenthelper.R
 import com.example.studenthelper.VM.StudentListViewModel
-import com.example.studenthelper.view.Adapter.CourseListAdapter
 import com.example.studenthelper.view.Adapter.StudentListAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -27,26 +23,32 @@ class StudentListFragment : Fragment() {
     }
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var fab: FloatingActionButton
     private lateinit var viewAdapter: StudentListAdapter
+    private lateinit var navController: NavController
     private val viewModel: StudentListViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.student_list_fragment, container, false)
+        val v = inflater.inflate(R.layout.student_list_fragment, container, false)
+        recyclerView = v.findViewById(R.id.allStudents_recyclerView)
+        fab = v.findViewById<FloatingActionButton>(R.id.addStudent_floatingActionButton)
+        return v
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewManager = LinearLayoutManager(this.context)
-        recyclerView = view.findViewById(R.id.allStudents_recyclerView)
+        val linearLayoutManager = LinearLayoutManager(this.context)
+        navController = view.findNavController()
+
         viewAdapter = StudentListAdapter(
             viewModel.students
         )
         {
             //delete handler
-            viewModel.removeStudent(it);
+            viewModel.removeStudent(it)
         }
 
         recyclerView.apply {
@@ -54,18 +56,20 @@ class StudentListFragment : Fragment() {
             // in content do not change the layout size of the RecyclerView
             setHasFixedSize(true)
             // use a linear layout manager
-            layoutManager = viewManager
+            layoutManager = linearLayoutManager
             // specify an viewAdapter (see also next example)
             adapter = viewAdapter
         }
 
         viewModel.students.observe(viewLifecycleOwner) {
-            viewAdapter.notifyDataSetChanged();
+            viewAdapter.notifyDataSetChanged()
         }
 
-        view.findViewById<FloatingActionButton>(R.id.addStudent_floatingActionButton).setOnClickListener {
-            view.findNavController().navigate(R.id.action_studentListFragment_to_addStudentFragment)
-        }
+        fab
+            .setOnClickListener {
+                navController
+                    .navigate(R.id.action_studentListFragment_to_addStudentFragment)
+            }
     }
 
 

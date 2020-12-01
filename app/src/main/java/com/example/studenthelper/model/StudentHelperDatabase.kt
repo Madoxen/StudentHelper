@@ -6,41 +6,43 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.studenthelper.model.*
 
-@Database(entities = [Student::class, Course::class, CourseStudentCrossRef::class], version = 3, exportSchema = false)
+@Database(
+    entities = [Student::class, Course::class, CourseStudentCrossRef::class],
+    version = 3,
+    exportSchema = false
+)
 abstract class StudentHelperDatabase : RoomDatabase() {
 
     abstract fun studentDao(): StudentDAO
     abstract fun courseDao(): CourseDAO
-    abstract fun courseStudentDao() : CourseWithStudentsDAO;
+    abstract fun courseStudentDao(): CourseWithStudentsDAO
 
 
     //INFO: Singleton?
-    companion object{
+    companion object {
         @Volatile
-        private var INSTANCE: StudentHelperDatabase?=null
+        private var INSTANCE: StudentHelperDatabase? = null
 
-        fun getDatabase(context: Context):StudentHelperDatabase{
-            val tempInstance=INSTANCE
+        fun getDatabase(context: Context): StudentHelperDatabase {
+            val tempInstance = INSTANCE
 
-            if(tempInstance!=null)
+            if (tempInstance != null)
                 return tempInstance
             else
                 synchronized(this)
                 {
-                    val instance= Room.databaseBuilder(
+                    val instance = Room.databaseBuilder(
                         context.applicationContext,
                         StudentHelperDatabase::class.java,
                         "my_database"
                     ).fallbackToDestructiveMigration().build()
-                    INSTANCE=instance
+                    INSTANCE = instance
                     return instance
 
                 }
 
 
         }
-
-
 
 
     }

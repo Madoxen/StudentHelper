@@ -24,5 +24,6 @@ data class CourseWithStudents(
         entityColumn = "studentID",
         associateBy = Junction(CourseStudentCrossRef::class)
     )
-    val students: List<Student>)
+    val students: List<Student>
+)
 

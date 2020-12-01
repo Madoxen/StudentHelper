@@ -1,10 +1,10 @@
-package com.example.studenthelper.model.repos;
+package com.example.studenthelper.model.repos
 
 import androidx.lifecycle.LiveData
 import com.example.studenthelper.model.Mark
 import com.example.studenthelper.model.MarkDAO
 
-public class MarkRepo(private val markDao: MarkDAO) {
+class MarkRepo(private val markDao: MarkDAO) {
 
     val readAll: LiveData<List<Mark>> = markDao.all()
 
@@ -12,5 +12,5 @@ public class MarkRepo(private val markDao: MarkDAO) {
         markDao.insert(mark)
     }
 
-    suspend fun delete(mark: Mark)=markDao.delete(mark)
+    suspend fun delete(mark: Mark) = markDao.delete(mark)
 }

@@ -1,13 +1,10 @@
 package com.example.studenthelper.view.Adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
-import android.widget.ToggleButton
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studenthelper.R
@@ -20,51 +17,50 @@ class StudentListAdapter(
 
 
     class StudentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textViewFirstName = view.findViewById<TextView>(R.id.firstNameTextView);
-        val textViewLastName = view.findViewById<TextView>(R.id.lastNameTextView);
+        val textViewFirstName = view.findViewById<TextView>(R.id.firstNameTextView)
+        val textViewLastName = view.findViewById<TextView>(R.id.lastNameTextView)
         val selectionToggle = view.findViewById<CheckBox>(R.id.studentSelect_checkBox)
             .also { it.visibility = toggleVis }
 
         companion object {
             @JvmStatic
             var toggleVis: Int = View.GONE
-                get() = field;
                 set(value) {
                     field = value
-                    onToggleVisibilityChanged();
+                    onToggleVisibilityChanged()
                 }
 
             @JvmStatic
             fun onToggleVisibilityChanged() {
                 //trigger change in all registered holders
                 for (t in toggles) {
-                    t.second();
+                    t.second()
                 }
             }
 
 
             @JvmStatic
-            var toggles: MutableList<Pair<View, () -> Unit>> = ArrayList<Pair<View, () -> Unit>>();
+            var toggles: MutableList<Pair<View, () -> Unit>> = ArrayList<Pair<View, () -> Unit>>()
 
 
             @JvmStatic
             fun registerHolder(view: View, onVisibilityChangedHandler: () -> Unit) {
-                toggles.add(Pair(view, onVisibilityChangedHandler));
+                toggles.add(Pair(view, onVisibilityChangedHandler))
             }
         }
 
         init {
             registerHolder(view) {
-                selectionToggle.visibility = toggleVis;
-            };
-            toggleVis = View.GONE;
-            view.setOnLongClickListener() {
+                selectionToggle.visibility = toggleVis
+            }
+            toggleVis = View.GONE
+            view.setOnLongClickListener {
                 if (toggleVis != View.VISIBLE) {
-                    toggleVis = View.VISIBLE;
+                    toggleVis = View.VISIBLE
                 } else {
-                    toggleVis = View.GONE;
+                    toggleVis = View.GONE
                 }
-                false;
+                false
             }
         }
     }
@@ -79,7 +75,7 @@ class StudentListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return students.value?.size ?: 0;
+        return students.value?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {

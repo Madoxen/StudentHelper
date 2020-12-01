@@ -1,7 +1,8 @@
 package com.example.studenthelper.VM
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import com.example.sqlite_example.model.StudentHelperDatabase
 import com.example.studenthelper.model.Course
 import com.example.studenthelper.model.CourseWithStudents
@@ -12,8 +13,10 @@ class CourseViewModel(application: Application, representedCourseID: Long) :
     AndroidViewModel(application) {
 
     private val repo: CourseStudentRepo =
-        CourseStudentRepo(StudentHelperDatabase.getDatabase(application).courseStudentDao());
-    val students: LiveData<CourseWithStudents> = repo.getStudentsForCourse(representedCourseID);
+        CourseStudentRepo(StudentHelperDatabase.getDatabase(application).courseStudentDao())
+    val students: LiveData<CourseWithStudents> = repo.getStudentsForCourse(representedCourseID)
     val representedCourse: LiveData<Course> =
-        CourseRepo(StudentHelperDatabase.getDatabase(application).courseDao()).read(representedCourseID);
+        CourseRepo(StudentHelperDatabase.getDatabase(application).courseDao()).read(
+            representedCourseID
+        )
 }
