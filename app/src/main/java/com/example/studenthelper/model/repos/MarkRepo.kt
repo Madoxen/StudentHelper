@@ -7,6 +7,8 @@ import com.example.studenthelper.model.MarkDAO
 class MarkRepo(private val markDao: MarkDAO) {
 
     val readAll: LiveData<List<Mark>> = markDao.all()
+    fun readForStudentCourse(studentCourseID: Long): LiveData<List<Mark>> =
+        markDao.readForStudentCourse(studentCourseID)
 
     suspend fun add(mark: Mark) {
         markDao.insert(mark)

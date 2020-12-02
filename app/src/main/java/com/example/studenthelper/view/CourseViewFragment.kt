@@ -99,6 +99,12 @@ class CourseViewFragment : Fragment() {
         viewAdapter = StudentListAdapter(
             viewModel.students
         )
+        {
+            //select handler
+            val bundle = bundleOf("relationID" to viewModel.getRelationIDForStudent(it))
+            navController
+                .navigate(R.id.action_courseViewFragment_to_studentViewFragment, bundle)
+        }
 
         viewModel.relations.observe(viewLifecycleOwner) {} //For some reason this is needed for live data
         //to even have a value wtf

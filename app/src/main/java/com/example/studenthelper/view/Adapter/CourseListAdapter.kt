@@ -16,7 +16,7 @@ import com.example.studenthelper.view.Base.IHasItemDetails
 
 class CourseListAdapter(
     val courses: LiveData<List<Course>>,
-    private val chooseCallback: (Course) -> Unit
+    private val chooseCallback: (Course) -> Unit = {}
 ) :
     RecyclerView.Adapter<CourseListAdapter.CourseViewHolder>() {
     var tracker: SelectionTracker<Long>? = null

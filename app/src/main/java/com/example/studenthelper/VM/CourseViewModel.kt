@@ -3,7 +3,6 @@ package com.example.studenthelper.VM
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.observe
 import androidx.lifecycle.viewModelScope
 import com.example.sqlite_example.model.StudentHelperDatabase
 import com.example.studenthelper.model.CourseStudentCrossRef
@@ -38,7 +37,8 @@ class CourseViewModel(application: Application, representedCourseID: Long) :
     var students: LiveData<List<Student>> =
         studentRepo.getStudentsInCourse(representedCourseID)
 
-    var studentsOutOfCourse : LiveData<List<Student>> = studentRepo.getStudentsOutOfCourse(representedCourseID);
+    var studentsOutOfCourse: LiveData<List<Student>> =
+        studentRepo.getStudentsOutOfCourse(representedCourseID);
 
 
     var relations: LiveData<List<CourseStudentCrossRef>> =
@@ -46,6 +46,9 @@ class CourseViewModel(application: Application, representedCourseID: Long) :
 
     var representedCourse = courseRepo.read(representedCourseID);
 
+    fun getRelationIDForStudent(student: Student): Long? {
+        return relations.value?.find { x -> x.studentID == student.ID }?.ID
+    }
 
     fun addStudentToCourse(student: Student) {
         viewModelScope.launch { //launch new coroutine to avoid blocking main thread

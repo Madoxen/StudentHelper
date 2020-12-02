@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_courseViewFragment_to_addExistingStudentFragment"
             app:destination="@id/addExistingStudentFragment" />
+        <action
+            android:id="@+id/action_courseViewFragment_to_studentViewFragment"
+            app:destination="@id/studentViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/addStudentFragment"
@@ -64,5 +67,24 @@
         <action
             android:id="@+id/action_courseListFragment_to_courseViewFragment"
             app:destination="@id/courseViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/studentViewFragment"
+        android:name="com.example.studenthelper.view.StudentViewFragment"
+        android:label="fragment_student_view"
+        tools:layout="@layout/fragment_student_view" >
+        <action
+            android:id="@+id/action_studentViewFragment_to_addNewMarkFragment"
+            app:destination="@id/addNewMarkFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewMarkFragment"
+        android:name="com.example.studenthelper.view.AddNewMarkFragment"
+        android:label="fragment_add_new_mark"
+        tools:layout="@layout/fragment_add_new_mark" >
+        <action
+            android:id="@+id/action_addNewMarkFragment_pop"
+            app:popUpTo="@id/addNewMarkFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

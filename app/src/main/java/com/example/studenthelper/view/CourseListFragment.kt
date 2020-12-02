@@ -55,7 +55,7 @@ class CourseListFragment : Fragment() {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             return when (item.itemId) {
                 R.id.menu_deleteItems -> {
-                    tracker.selection.mapNotNull { x -> viewAdapter.courses?.value?.get(x.toInt()) }
+                    tracker.selection.mapNotNull { x -> viewAdapter.courses.value?.get(x.toInt()) }
                         .forEach { viewModel.removeCourse(it) }
                     tracker.clearSelection()
                     mode.finish() // Action picked, so close the CAB

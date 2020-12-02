@@ -15,7 +15,8 @@ import com.example.studenthelper.view.Base.IHasItemDetails
 
 
 class StudentListAdapter(
-    val students: LiveData<List<Student>>?
+    val students: LiveData<List<Student>>?,
+    private val chooseCallback: (Student) -> Unit = {}
 ) : RecyclerView.Adapter<StudentListAdapter.StudentViewHolder>() {
 
     init {
@@ -28,7 +29,6 @@ class StudentListAdapter(
         val textViewFirstName = view.findViewById<TextView>(R.id.firstNameTextView)
         val textViewLastName = view.findViewById<TextView>(R.id.lastNameTextView)
         val selectionToggle = view.findViewById<CheckBox>(R.id.studentSelect_checkBox)
-
 
         override fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
             object : ItemDetailsLookup.ItemDetails<Long>() {
@@ -65,6 +65,15 @@ class StudentListAdapter(
             holder.selectionToggle.visibility = View.GONE
 
         holder.selectionToggle.isChecked = tracker!!.isSelected(position.toLong())
+
+
+        holder.itemView.setOnClickListener {
+            students?.value?.get(holder.adapterPosition)?.let { student ->
+                chooseCallback(
+                    student
+                )
+            }
+        }
     }
 }
 

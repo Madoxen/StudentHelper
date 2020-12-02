@@ -8,7 +8,7 @@ import com.example.studenthelper.model.*
 
 @Database(
     entities = [Student::class, Course::class, CourseStudentCrossRef::class, Mark::class],
-    version = 6,
+    version = 7,
     exportSchema = false
 )
 abstract class StudentHelperDatabase : RoomDatabase() {
@@ -16,6 +16,7 @@ abstract class StudentHelperDatabase : RoomDatabase() {
     abstract fun studentDao(): StudentDAO
     abstract fun courseDao(): CourseDAO
     abstract fun courseStudentDao(): CourseWithStudentsDAO
+    abstract fun markDao(): MarkDAO
 
 
     //INFO: Singleton?
