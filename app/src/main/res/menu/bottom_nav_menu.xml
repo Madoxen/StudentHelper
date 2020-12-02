@@ -4,6 +4,9 @@
         android:id="@+id/courseListFragment"
         android:title="Courses"></item>
     <item
+        android:id="@+id/reportFragment"
+        android:title="Report"></item>
+    <item
         android:id="@+id/studentListFragment"
         android:title="Students"></item>
 </menu>

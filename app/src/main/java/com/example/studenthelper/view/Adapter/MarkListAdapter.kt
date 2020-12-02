@@ -57,11 +57,19 @@ class MarkListAdapter(
         holder.noteTextView.text = marks?.value?.get(position)?.note
         holder.dateTextView.text = marks?.value?.get(position)?.date.toString()
 
-        if (tracker!!.isSelected(position.toLong()))
-            holder.selectionToggle.visibility = View.VISIBLE
-        else
-            holder.selectionToggle.visibility = View.GONE
 
-        holder.selectionToggle.isChecked = tracker!!.isSelected(position.toLong())
+        if (tracker != null) { //bad practice, tracker could have changed in the different thread
+            //buuut i know it wont because nothing really changes it
+            if (tracker!!.isSelected(position.toLong()))
+                holder.selectionToggle.visibility = View.VISIBLE
+            else
+                holder.selectionToggle.visibility = View.GONE
+
+            holder.selectionToggle.isChecked = tracker!!.isSelected(position.toLong())
+        } else {
+            holder.selectionToggle.visibility = View.GONE
+        }
+
+
     }
 }

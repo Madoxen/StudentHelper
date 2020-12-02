@@ -87,4 +87,9 @@
             app:popUpTo="@id/addNewMarkFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.example.studenthelper.view.ReportFragment"
+        android:label="fragment_report"
+        tools:layout="@layout/fragment_report" />
 </navigation>
