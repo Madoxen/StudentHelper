@@ -3,40 +3,52 @@ package com.example.studenthelper.VM
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.observe
 import androidx.lifecycle.viewModelScope
 import com.example.sqlite_example.model.StudentHelperDatabase
-import com.example.studenthelper.model.Course
 import com.example.studenthelper.model.CourseStudentCrossRef
-import com.example.studenthelper.model.CourseWithStudents
 import com.example.studenthelper.model.Student
-import com.example.studenthelper.model.repos.CourseRepo
 import com.example.studenthelper.model.repos.CourseStudentRepo
+import com.example.studenthelper.model.repos.StudentRepo
 import kotlinx.coroutines.launch
 
-class CourseViewModel(application: Application, val representedCourseID: Long) :
+class CourseViewModel(application: Application, representedCourseID: Long) :
     AndroidViewModel(application) {
 
-    private val repo: CourseStudentRepo =
+    private val relationRepo: CourseStudentRepo =
         CourseStudentRepo(StudentHelperDatabase.getDatabase(application).courseStudentDao())
-    val courseWithStudents: LiveData<CourseWithStudents> =
-        repo.getStudentsForCourse(representedCourseID)
-    val students: LiveData<List<Student>> =
-        MutableLiveData(courseWithStudents.value?.students ?: ArrayList<Student>())
-    val representedCourse: LiveData<Course> =
-        CourseRepo(StudentHelperDatabase.getDatabase(application).courseDao()).read(
-            representedCourseID
-        )
+
+    private val studentRepo: StudentRepo =
+        StudentRepo(StudentHelperDatabase.getDatabase(application).studentDao())
+
+
+    var representedCourseID = representedCourseID
+        get() = field
+        set(value) {
+            field = value
+            students = studentRepo.getStudentsInCourse(representedCourseID) //refresh
+            relations = relationRepo.readForCourse(representedCourseID)
+        }
+    var students: LiveData<List<Student>> =
+        studentRepo.getStudentsInCourse(representedCourseID)
+
+
+     var relations: LiveData<List<CourseStudentCrossRef>> =
+        relationRepo.readForCourse(representedCourseID)
+
 
     fun addStudentToCourse(student: Student) {
         viewModelScope.launch { //launch new coroutine to avoid blocking main thread
-            repo.add(CourseStudentCrossRef(0, representedCourseID, student.studentID))
+            relationRepo.add(CourseStudentCrossRef(0, representedCourseID, student.ID))
         }
     }
 
     fun removeStudentFromCourse(student: Student) {
         viewModelScope.launch { //launch new coroutine to avoid blocking main thread
-            repo.delete(CourseStudentCrossRef(0, representedCourseID, student.studentID))
+            val relationToDelete = relations.value?.find { x -> x.studentID == student.ID }
+            if (relationToDelete != null) {
+                relationRepo.delete(relationToDelete)
+            }
         }
     }
 }

@@ -11,11 +11,11 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studenthelper.R
 import com.example.studenthelper.model.Student
+import com.example.studenthelper.view.Base.IHasItemDetails
 
 
 class StudentListAdapter(
-    val students: LiveData<List<Student>>,
-    val deleteStudentCallback: (List<Student>) -> Unit
+    val students: LiveData<List<Student>>?
 ) : RecyclerView.Adapter<StudentListAdapter.StudentViewHolder>() {
 
     init {
@@ -24,13 +24,13 @@ class StudentListAdapter(
 
     var tracker: SelectionTracker<Long>? = null
 
-    class StudentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class StudentViewHolder(view: View) : RecyclerView.ViewHolder(view), IHasItemDetails<Long> {
         val textViewFirstName = view.findViewById<TextView>(R.id.firstNameTextView)
         val textViewLastName = view.findViewById<TextView>(R.id.lastNameTextView)
         val selectionToggle = view.findViewById<CheckBox>(R.id.studentSelect_checkBox)
 
 
-        fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
+        override fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
             object : ItemDetailsLookup.ItemDetails<Long>() {
                 override fun getSelectionKey(): Long? = itemId
                 override fun getPosition(): Int = adapterPosition
@@ -46,7 +46,7 @@ class StudentListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return students.value?.size ?: 0
+        return students?.value?.size ?: 0
     }
 
 
@@ -55,8 +55,8 @@ class StudentListAdapter(
     }
 
     override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
-        holder.textViewFirstName.text = students.value?.get(position)?.firstName
-        holder.textViewLastName.text = students.value?.get(position)?.lastName
+        holder.textViewFirstName.text = students?.value?.get(position)?.firstName
+        holder.textViewLastName.text = students?.value?.get(position)?.lastName
 
         if (tracker!!.isSelected(position.toLong()))
             holder.selectionToggle.visibility = View.VISIBLE

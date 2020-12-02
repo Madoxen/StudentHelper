@@ -1,7 +1,6 @@
 package com.example.studenthelper.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -16,6 +15,7 @@ import com.example.studenthelper.R
 import com.example.studenthelper.VM.CourseViewModel
 import com.example.studenthelper.VM.Factory.CourseViewModelFactory
 import com.example.studenthelper.view.Adapter.StudentListAdapter
+import com.example.studenthelper.view.Base.RVLookup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CourseViewFragment : Fragment() {
@@ -30,12 +30,11 @@ class CourseViewFragment : Fragment() {
     private lateinit var viewAdapter: StudentListAdapter
     private lateinit var navController: NavController
     private lateinit var tracker: SelectionTracker<Long>
-    private val viewModel: CourseViewModel by activityViewModels {
+    private val viewModel: CourseViewModel by activityViewModels() { //This needs to be fragment scoped because when user will click back and then will choose different
+        //course the view model would still be unchanged due to VM cache
         CourseViewModelFactory(requireActivity().application, arguments?.get("courseID") as Long)
     }
     private var actionMode: ActionMode? = null
-
-
     private val actionModeCallback = object : ActionMode.Callback {
         // Called when the action mode is created; startActionMode() was called
         override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
@@ -55,7 +54,7 @@ class CourseViewFragment : Fragment() {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             return when (item.itemId) {
                 R.id.menu_deleteItems -> {
-                    tracker.selection.mapNotNull { x -> viewAdapter.students.value?.get(x.toInt()) }
+                    tracker.selection.mapNotNull { x -> viewAdapter.students?.value?.get(x.toInt()) }
                         .forEach { viewModel.removeStudentFromCourse(it) }
                     tracker.clearSelection()
                     mode.finish() // Action picked, so close the CAB
@@ -73,6 +72,11 @@ class CourseViewFragment : Fragment() {
     }
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.representedCourseID =  arguments?.get("courseID") as Long; //update ID
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -80,7 +84,6 @@ class CourseViewFragment : Fragment() {
         val v = inflater.inflate(R.layout.student_list_fragment, container, false)
         recyclerView = v.findViewById(R.id.allStudents_recyclerView)
         fab = v.findViewById(R.id.addStudent_floatingActionButton)
-        Log.d("rrerwrr", viewModel.representedCourse.value?.courseID.toString())
         return v
     }
 
@@ -91,9 +94,9 @@ class CourseViewFragment : Fragment() {
         viewAdapter = StudentListAdapter(
             viewModel.students
         )
-        {
-            it.forEach { s -> viewModel.removeStudentFromCourse(s) }
-        }
+
+        viewModel.relations.observe(viewLifecycleOwner){} //For some reason this is needed for live data
+        //to even have a value wtf
 
         recyclerView.apply {
             // use this setting to improve performance if you know that changes
@@ -110,7 +113,7 @@ class CourseViewFragment : Fragment() {
             "selection-1",
             recyclerView,
             StableIdKeyProvider(recyclerView),
-            RVLookup(recyclerView),
+            RVLookup<StudentListAdapter.StudentViewHolder, Long>(recyclerView),
             StorageStrategy.createLongStorage()
         ).withSelectionPredicate(
             SelectionPredicates.createSelectAnything()
@@ -134,8 +137,7 @@ class CourseViewFragment : Fragment() {
         })
 
         viewAdapter.tracker = tracker
-
-        viewModel.courseWithStudents.observe(viewLifecycleOwner) {
+        viewModel.students.observe(viewLifecycleOwner) {
             viewAdapter.notifyDataSetChanged()
         }
 
@@ -143,7 +145,7 @@ class CourseViewFragment : Fragment() {
             tracker.onRestoreInstanceState(savedInstanceState)
 
         fab.setOnClickListener {
-            val bundle = bundleOf("courseID" to (viewModel.representedCourse.value?.courseID ?: -1))
+            val bundle = bundleOf("courseID" to viewModel.representedCourseID)
             navController
                 .navigate(R.id.action_courseViewFragment_to_addExistingStudentFragment, bundle)
         }
@@ -155,20 +157,6 @@ class CourseViewFragment : Fragment() {
         tracker.onSaveInstanceState(outState)
     }
 
-
-    class RVLookup(private val rv: RecyclerView) : ItemDetailsLookup<Long>() {
-        override fun getItemDetails(event: MotionEvent)
-                : ItemDetails<Long>? {
-
-            // More code here
-            val view = rv.findChildViewUnder(event.x, event.y)
-            if (view != null) {
-                return (rv.getChildViewHolder(view) as StudentListAdapter.StudentViewHolder)
-                    .getItemDetails()
-            }
-            return null
-        }
-    }
 }
 
 

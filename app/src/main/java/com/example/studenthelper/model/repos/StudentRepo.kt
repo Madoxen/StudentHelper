@@ -9,6 +9,10 @@ class StudentRepo(private val studentDao: StudentDAO) {
     val readAll: LiveData<List<Student>> = studentDao.all()
 
 
+    fun getStudentsInCourse(courseID: Long): LiveData<List<Student>> {
+        return studentDao.getStudentsByCourse(courseID)
+    }
+
     suspend fun add(student: Student) {
         studentDao.insert(student)
     }

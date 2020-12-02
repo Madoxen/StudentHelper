@@ -15,6 +15,7 @@ import com.example.studenthelper.R
 import com.example.studenthelper.VM.CourseViewModel
 import com.example.studenthelper.VM.StudentListViewModel
 import com.example.studenthelper.view.Adapter.StudentListAdapter
+import com.example.studenthelper.view.Base.RVLookup
 
 class AddExistingStudentFragment : Fragment() {
 
@@ -29,7 +30,6 @@ class AddExistingStudentFragment : Fragment() {
     private val viewModel: CourseViewModel by activityViewModels()
     private val studentsViewModel: StudentListViewModel by activityViewModels() //this is feeding our main list
     private var actionMode: ActionMode? = null
-
 
     private val actionModeCallback = object : ActionMode.Callback {
         // Called when the action mode is created; startActionMode() was called
@@ -50,7 +50,7 @@ class AddExistingStudentFragment : Fragment() {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             return when (item.itemId) {
                 R.id.menu_addItems -> {
-                    tracker.selection.mapNotNull { x -> viewAdapter.students.value?.get(x.toInt()) }
+                    tracker.selection.mapNotNull { x -> viewAdapter.students?.value?.get(x.toInt()) }
                         .forEach { viewModel.addStudentToCourse(it) }
                     tracker.clearSelection()
                     mode.finish() // Action picked, so close the CAB
@@ -68,13 +68,17 @@ class AddExistingStudentFragment : Fragment() {
     }
 
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.representedCourseID =  arguments?.get("courseID") as Long; //update ID
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val v = inflater.inflate(R.layout.fragment_add_existing_student, container, false)
         recyclerView = v.findViewById(R.id.existingStudentsList_RecyclerView)
-        Log.d("rrerwrr", viewModel.representedCourse.value?.courseID.toString())
         return v
     }
 
@@ -85,9 +89,6 @@ class AddExistingStudentFragment : Fragment() {
         viewAdapter = StudentListAdapter(
             studentsViewModel.students
         )
-        {
-            it.forEach { s -> viewModel.removeStudentFromCourse(s) }
-        }
 
         recyclerView.apply {
             // use this setting to improve performance if you know that changes
@@ -104,7 +105,7 @@ class AddExistingStudentFragment : Fragment() {
             "selection-1",
             recyclerView,
             StableIdKeyProvider(recyclerView),
-            RVLookup(recyclerView),
+            RVLookup<StudentListAdapter.StudentViewHolder, Long>(recyclerView),
             StorageStrategy.createLongStorage()
         ).withSelectionPredicate(
             SelectionPredicates.createSelectAnything()
@@ -124,7 +125,6 @@ class AddExistingStudentFragment : Fragment() {
                     /* setMenuItemTitle(selectionTracker.getSelection().size())*/
                 }
             }
-
         })
 
         viewAdapter.tracker = tracker
@@ -142,21 +142,6 @@ class AddExistingStudentFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         tracker.onSaveInstanceState(outState)
-    }
-
-
-    class RVLookup(private val rv: RecyclerView) : ItemDetailsLookup<Long>() {
-        override fun getItemDetails(event: MotionEvent)
-                : ItemDetails<Long>? {
-
-            // More code here
-            val view = rv.findChildViewUnder(event.x, event.y)
-            if (view != null) {
-                return (rv.getChildViewHolder(view) as StudentListAdapter.StudentViewHolder)
-                    .getItemDetails()
-            }
-            return null
-        }
     }
 }
 

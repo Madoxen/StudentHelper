@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.studenthelper.R
 import com.example.studenthelper.VM.StudentListViewModel
 import com.example.studenthelper.view.Adapter.StudentListAdapter
+import com.example.studenthelper.view.Base.RVLookup
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
@@ -28,8 +29,6 @@ class StudentListFragment : Fragment() {
     private lateinit var navController: NavController
     private lateinit var tracker: SelectionTracker<Long>
     private val viewModel: StudentListViewModel by activityViewModels()
-
-
     private var actionMode: ActionMode? = null
 
 
@@ -52,7 +51,7 @@ class StudentListFragment : Fragment() {
         override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
             return when (item.itemId) {
                 R.id.menu_deleteItems -> {
-                    tracker.selection.mapNotNull { x -> viewAdapter.students.value?.get(x.toInt()) }
+                    tracker.selection.mapNotNull { x -> viewAdapter.students?.value?.get(x.toInt()) }
                         .forEach { viewModel.removeStudent(it) }
                     tracker.clearSelection()
                     mode.finish() // Action picked, so close the CAB
@@ -87,10 +86,6 @@ class StudentListFragment : Fragment() {
         viewAdapter = StudentListAdapter(
             viewModel.students
         )
-        {
-            it.forEach { s -> viewModel.removeStudent(s) }
-        }
-
         recyclerView.apply {
             // use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView
@@ -106,7 +101,7 @@ class StudentListFragment : Fragment() {
             "selection-1",
             recyclerView,
             StableIdKeyProvider(recyclerView),
-            RVLookup(recyclerView),
+            RVLookup<StudentListAdapter.StudentViewHolder, Long>(recyclerView),
             StorageStrategy.createLongStorage()
         ).withSelectionPredicate(
             SelectionPredicates.createSelectAnything()
@@ -149,20 +144,5 @@ class StudentListFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         tracker.onSaveInstanceState(outState)
-    }
-
-
-    class RVLookup(private val rv: RecyclerView) : ItemDetailsLookup<Long>() {
-        override fun getItemDetails(event: MotionEvent)
-                : ItemDetails<Long>? {
-
-            // More code here
-            val view = rv.findChildViewUnder(event.x, event.y)
-            if (view != null) {
-                return (rv.getChildViewHolder(view) as StudentListAdapter.StudentViewHolder)
-                    .getItemDetails()
-            }
-            return null
-        }
     }
 }

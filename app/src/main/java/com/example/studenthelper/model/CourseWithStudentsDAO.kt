@@ -6,17 +6,14 @@ import androidx.room.*
 @Dao
 interface CourseWithStudentsDAO {
 
-    @Transaction
-    @Query("select * from student_table where :sid = studentID")
-    fun getStudentWithCourses(sid: Long): LiveData<StudentWithCourses> //use async requests
+    @Query("select * from student_course_cross where courseID = :courseID")
+    fun readForCourse(courseID: Long) : LiveData<List<CourseStudentCrossRef>>
 
-    @Transaction
-    @Query("select * from course_table where :cid = courseID")
-    fun getCourseWithStudents(cid: Long): LiveData<CourseWithStudents> //use async requests
-
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(relation: CourseStudentCrossRef)
 
     @Delete
     suspend fun delete(relation: CourseStudentCrossRef)
+
+
 }

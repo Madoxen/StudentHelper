@@ -20,4 +20,8 @@ interface StudentDAO {
     fun all(): LiveData<List<Student>>
 
 
+    @Query("select * from student_table where ID in (select studentID from student_course_cross where courseID = :courseID)")
+    fun getStudentsByCourse(courseID: Long) : LiveData<List<Student>>
+
+
 }

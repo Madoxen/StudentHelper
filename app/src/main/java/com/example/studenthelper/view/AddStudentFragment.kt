@@ -27,9 +27,9 @@ class AddStudentFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_add_student, container, false)
-        studentFirstNameEditText = v.findViewById<EditText>(R.id.studentFirstName_EditText)
-        studentLastNameEditText = v.findViewById<EditText>(R.id.studentLastName_EditText)
-        confirmButton = v.findViewById<Button>(R.id.addStudentConfirm_button)
+        studentFirstNameEditText = v.findViewById(R.id.studentFirstName_EditText)
+        studentLastNameEditText = v.findViewById(R.id.studentLastName_EditText)
+        confirmButton = v.findViewById(R.id.addStudentConfirm_button)
         return v
     }
 
