@@ -13,7 +13,12 @@ interface MarkDAO {
     @Delete
     suspend fun delete(mark: Mark)
 
-    @Query("select * from course_table")
+    @Query("select * from mark_table")
     fun all(): LiveData<List<Mark>> //use async requests
+
+
+    @Query("select * from mark_table where courseStudentID = :courseStudentID")
+    fun getMarksForCourseWithStudents(courseStudentID : Long) : LiveData<List<Mark>>
+
 
 }

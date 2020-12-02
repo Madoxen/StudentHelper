@@ -1,19 +1,20 @@
 package com.example.studenthelper.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.recyclerview.selection.*
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StableIdKeyProvider
+import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studenthelper.R
 import com.example.studenthelper.VM.CourseViewModel
-import com.example.studenthelper.VM.StudentListViewModel
 import com.example.studenthelper.view.Adapter.StudentListAdapter
 import com.example.studenthelper.view.Base.RVLookup
 
@@ -28,7 +29,6 @@ class AddExistingStudentFragment : Fragment() {
     private lateinit var navController: NavController
     private lateinit var tracker: SelectionTracker<Long>
     private val viewModel: CourseViewModel by activityViewModels()
-    private val studentsViewModel: StudentListViewModel by activityViewModels() //this is feeding our main list
     private var actionMode: ActionMode? = null
 
     private val actionModeCallback = object : ActionMode.Callback {
@@ -70,7 +70,7 @@ class AddExistingStudentFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.representedCourseID =  arguments?.get("courseID") as Long; //update ID
+        viewModel.representedCourseID = arguments?.get("courseID") as Long; //update ID
     }
 
     override fun onCreateView(
@@ -87,7 +87,7 @@ class AddExistingStudentFragment : Fragment() {
         val linearLayoutManager = LinearLayoutManager(this.context)
         navController = view.findNavController()
         viewAdapter = StudentListAdapter(
-            studentsViewModel.students
+            viewModel.studentsOutOfCourse
         )
 
         recyclerView.apply {
@@ -129,7 +129,7 @@ class AddExistingStudentFragment : Fragment() {
 
         viewAdapter.tracker = tracker
 
-        studentsViewModel.students.observe(viewLifecycleOwner) {
+        viewModel.studentsOutOfCourse.observe(viewLifecycleOwner) {
             viewAdapter.notifyDataSetChanged()
         }
 

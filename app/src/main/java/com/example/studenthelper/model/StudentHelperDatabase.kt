@@ -7,8 +7,8 @@ import androidx.room.RoomDatabase
 import com.example.studenthelper.model.*
 
 @Database(
-    entities = [Student::class, Course::class, CourseStudentCrossRef::class],
-    version = 4,
+    entities = [Student::class, Course::class, CourseStudentCrossRef::class, Mark::class],
+    version = 6,
     exportSchema = false
 )
 abstract class StudentHelperDatabase : RoomDatabase() {

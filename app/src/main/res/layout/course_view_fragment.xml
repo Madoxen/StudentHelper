@@ -8,7 +8,7 @@
     tools:context=".view.CourseViewFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/studentRecyclerView"
+        android:id="@+id/allCourseStudent_RecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

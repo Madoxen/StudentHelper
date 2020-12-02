@@ -24,4 +24,8 @@ interface StudentDAO {
     fun getStudentsByCourse(courseID: Long) : LiveData<List<Student>>
 
 
+    @Query("select * from student_table where ID not in (select studentID from student_course_cross where courseID = :courseID)")
+    fun getStudentsNotInCourse(courseID: Long) : LiveData<List<Student>>
+
+
 }

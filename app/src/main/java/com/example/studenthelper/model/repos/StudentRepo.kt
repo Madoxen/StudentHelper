@@ -19,4 +19,8 @@ class StudentRepo(private val studentDao: StudentDAO) {
 
     suspend fun delete(student: Student) = studentDao.delete(student)
 
+    fun getStudentsOutOfCourse(courseID: Long): LiveData<List<Student>> {
+        return studentDao.getStudentsNotInCourse(courseID);
+    }
+
 }

@@ -10,13 +10,12 @@ import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
 import com.example.studenthelper.R
-import com.example.studenthelper.model.Student
+import com.example.studenthelper.model.Mark
 import com.example.studenthelper.view.Base.IHasItemDetails
 
-
-class StudentListAdapter(
-    val students: LiveData<List<Student>>?
-) : RecyclerView.Adapter<StudentListAdapter.StudentViewHolder>() {
+class MarkListAdapter(
+    val marks: LiveData<List<Mark>>?
+) : RecyclerView.Adapter<MarkListAdapter.MarkViewHolder>() {
 
     init {
         setHasStableIds(true)
@@ -24,40 +23,39 @@ class StudentListAdapter(
 
     var tracker: SelectionTracker<Long>? = null
 
-    class StudentViewHolder(view: View) : RecyclerView.ViewHolder(view), IHasItemDetails<Long> {
-        val textViewFirstName = view.findViewById<TextView>(R.id.firstNameTextView)
-        val textViewLastName = view.findViewById<TextView>(R.id.lastNameTextView)
+    class MarkViewHolder(view: View) : RecyclerView.ViewHolder(view), IHasItemDetails<Long> {
+        val markTextView = view.findViewById<TextView>(R.id.mark_textView)
+        val noteTextView = view.findViewById<TextView>(R.id.markNote_textView)
+        val dateTextView = view.findViewById<TextView>(R.id.markDate_textView)
         val selectionToggle = view.findViewById<CheckBox>(R.id.studentSelect_checkBox)
-
 
         override fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
             object : ItemDetailsLookup.ItemDetails<Long>() {
                 override fun getSelectionKey(): Long? = itemId
                 override fun getPosition(): Int = adapterPosition
             }
-
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarkViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.student_entry, parent, false)
-        return StudentViewHolder(
+            .inflate(R.layout.mark_entry, parent, false)
+        return MarkViewHolder(
             view
         )
     }
 
     override fun getItemCount(): Int {
-        return students?.value?.size ?: 0
+        return marks?.value?.size ?: 0
     }
-
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
 
-    override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
-        holder.textViewFirstName.text = students?.value?.get(position)?.firstName
-        holder.textViewLastName.text = students?.value?.get(position)?.lastName
+    override fun onBindViewHolder(holder: MarkViewHolder, position: Int) {
+        holder.markTextView.text = marks?.value?.get(position)?.mark.toString()
+        holder.noteTextView.text = marks?.value?.get(position)?.note
+        holder.dateTextView.text = marks?.value?.get(position)?.date.toString()
 
         if (tracker!!.isSelected(position.toLong()))
             holder.selectionToggle.visibility = View.VISIBLE
@@ -67,5 +65,3 @@ class StudentListAdapter(
         holder.selectionToggle.isChecked = tracker!!.isSelected(position.toLong())
     }
 }
-
-
