@@ -17,34 +17,46 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextNumberSigned"
-        android:layout_width="0dp"
+        android:id="@+id/mark_EditView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:ems="10"
+        android:hint="@string/mark"
         android:inputType="numberSigned"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
-        android:layout_width="0dp"
+        android:id="@+id/markNote_EditView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:ems="10"
+        android:hint="@string/note"
         android:inputType="textPersonName"
-        android:text="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumberSigned" />
+        app:layout_constraintTop_toBottomOf="@+id/mark_EditView" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="0dp"
+        android:id="@+id/confirm_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:text="@string/confirm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintTop_toBottomOf="@+id/markNote_EditView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

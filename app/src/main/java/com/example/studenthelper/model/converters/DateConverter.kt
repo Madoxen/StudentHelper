@@ -1,7 +1,7 @@
 package com.example.studenthelper.model.converters
 
 import androidx.room.TypeConverter
-import java.sql.Date
+import java.util.Date
 
 public class DateConverter {
 

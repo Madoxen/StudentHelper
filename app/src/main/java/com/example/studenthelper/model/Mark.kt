@@ -2,7 +2,7 @@ package com.example.studenthelper.model
 
 import androidx.room.*
 import com.example.studenthelper.model.converters.DateConverter
-import java.sql.Date
+import java.util.Date
 
 
 @Entity(

@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.NavController
@@ -32,7 +33,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  */
 class StudentViewFragment : Fragment() {
 
-    private val viewModel: StudentViewModel by viewModels { //this view model should not live forever
+    private val viewModel: StudentViewModel by viewModels {
         StudentViewModelFactory(requireActivity().application, arguments?.get("relationID") as Long)
     }
     private lateinit var recyclerView: RecyclerView
@@ -156,7 +157,7 @@ class StudentViewFragment : Fragment() {
 
 
         fab.setOnClickListener {
-            val bundle = bundleOf("courseID" to viewModel.studentCourseRelationID)
+            val bundle = bundleOf("relationID" to viewModel.studentCourseRelationID)
             navController
                 .navigate(R.id.action_studentViewFragment_to_addNewMarkFragment, bundle)
         }
