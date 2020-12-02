@@ -27,7 +27,7 @@ class MarkListAdapter(
         val markTextView = view.findViewById<TextView>(R.id.mark_textView)
         val noteTextView = view.findViewById<TextView>(R.id.markNote_textView)
         val dateTextView = view.findViewById<TextView>(R.id.markDate_textView)
-        val selectionToggle = view.findViewById<CheckBox>(R.id.studentSelect_checkBox)
+        val selectionToggle = view.findViewById<CheckBox>(R.id.markEntry_selectionCheckBox)
 
         override fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
             object : ItemDetailsLookup.ItemDetails<Long>() {
